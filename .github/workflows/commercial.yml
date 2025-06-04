@@ -1,5 +1,4 @@
-# .github/workflows/commercial.yml
-# 태그 자동 생성 워크플로우
+# 태그 자동 생성 및 상용 릴리즈 생성 워크플로우
 name: commercial
 
 on:
@@ -16,7 +15,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # pr 커밋 메시지 생성
+          fetch-depth: 0 # pr 커밋 메시지 생성용 전체 히스토리
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Create Git tag with KST timestamp
+      - name: Create Git tag with KST timestamp (semver는 수동 또는 별도 관리)
         id: create_tag
         run: |
           git config --global user.name "${{ github.actor }}"
@@ -40,6 +40,8 @@ jobs:
           HOUR=$(TZ="Asia/Seoul" date +'%H')
           MINUTE=$(TZ="Asia/Seoul" date +'%M')
           SECOND=$(TZ="Asia/Seoul" date +'%S')
+
+          # 여기서 태그를 수동으로 관리하거나 자동으로 변경 가능 (아래는 날짜 기준 태그 예시)
           TAG="v${YEAR}-${MONTH}-${DAY}.${HOUR}.${MINUTE}.${SECOND}"
 
           echo "📌 태그 생성: $TAG"
@@ -97,22 +99,3 @@ jobs:
                 echo "- $COMMIT_MESSAGE $AUTHOR [\`$SHORT_HASH\`]($REPO_URL/commit/$COMMIT_HASH)" >> release-notes.md
               done <<< "$COMMITS"
               echo "" >> release-notes.md
-            fi
-          done
-          if [ "$FOUND_COMMITS" = false ]; then
-            echo "No new commits to include in release notes." >> release-notes.md
-          fi
-          NOTES=$(cat release-notes.md)
-          echo "notes<<EOF" >> $GITHUB_OUTPUT
-          echo "$NOTES" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.create_tag.outputs.tag }}
-          name: "🚀 ${{ steps.create_tag.outputs.tag }}"
-          body: ${{ steps.generate_notes.outputs.notes }}
-
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

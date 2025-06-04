@@ -1,0 +1,41 @@
+{
+  "release-type": "simple",
+  "changelog-path": "CHANGELOG.md",
+  "include-v-in-tag": true,
+  "bump-minor-pre-major": true,
+  "tagSeparator": "-",
+  "tagFormat": "v${version}-${timestamp}",
+  "labels": {
+    "major": ["release"],
+    "minor": ["feat", "improve"],
+    "patch": [
+      "fix",
+      "hotfix",
+      "style",
+      "refactor",
+      "chore",
+      "docs",
+      "ui/ux",
+      "seo",
+      "ci",
+      "merge",
+      "revert"
+    ]
+  },
+  "changelog-sections": {
+    "✨ Features (새로운 기능 추가 및 개선)": ["feat", "improve"],
+    "🐛 Bug Fixes (버그 수정)": ["fix", "hotfix"],
+    "🛠 Refactor (코드 리팩토링)": ["refactor"],
+    "🧹 Chore (빌드, 설정, 배포 등 기타 유지보수 작업)": [
+      "chore",
+      "ci",
+      "merge",
+      "revert"
+    ],
+    "🎨 Style (코드 스타일 변경)": ["style"],
+    "📝 Docs (문서 수정)": ["docs"],
+    "🧩 UI/UX 개선": ["ui/ux"],
+    "🔎 SEO 최적화": ["seo"]
+  },
+  "prerelease": false
+}

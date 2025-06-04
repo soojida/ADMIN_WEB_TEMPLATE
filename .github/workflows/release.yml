@@ -20,6 +20,7 @@ jobs:
           release-type: simple
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # PR 제목을 CHANGELOG에 주석처럼 자동 삽입
       - name: Append PR titles to CHANGELOG
         if: steps.release.outputs.releases_created
         uses: actions/github-script@v7
@@ -56,6 +57,7 @@ jobs:
               }
             }
 
+            // 커밋 해시 기준으로 PR 정보를 CHANGELOG 항목에 주석으로 추가
             changelog = changelog.replace(/- .*?\((\w{7})\)/g, (match, sha) => {
               const pr = prMap.get(sha);
               if (pr) {

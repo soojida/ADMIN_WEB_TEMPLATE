@@ -1,4 +1,5 @@
-# release-please로 릴리즈 생성 → 후처리 스크립트로 PR 제목 반영
+# release-please로 릴리즈 생성 → 후처리 스크립트로 PR 제목 반영 및
+# 릴리즈 이름에 'Release vX.X.X (YYYY-MM-DD HH:mm:ss)' 형식 적용
 name: Release with PR Title
 
 on:
@@ -25,13 +26,13 @@ jobs:
     if: needs.release.outputs.release_created == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR title from merged PR
+      - name: Get PR title from merged PR and update release name
         uses: actions/github-script@v7
         with:
           script: |
             const tag = '${{ needs.release.outputs.tag_name }}';
 
-            // 해당 태그의 릴리즈 정보 가져오기
+            // 릴리즈 정보 가져오기
             const releases = await github.rest.repos.listReleases({
               owner: context.repo.owner,
               repo: context.repo.repo
@@ -43,7 +44,7 @@ jobs:
               return;
             }
 
-            // 최근 머지된 PR 정보 가져오기
+            // 최신 dev 브랜치 머지된 PR 찾기
             const pulls = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -56,10 +57,13 @@ jobs:
             const mergedPR = pulls.data.find(p => p.merged_at && p.base.ref === 'dev');
             const prTitle = mergedPR?.title ?? '자동 릴리즈';
 
-            // 릴리즈 제목 업데이트
+            // KST 기준 날짜 시간 포맷 "YYYY-MM-DD HH:mm:ss"
+            const date = new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' });
+
+            // 릴리즈 이름 업데이트
             await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: release.id,
-              name: `Release ${tag} - ${prTitle}`
+              name: `Release ${tag} (${date}) - ${prTitle}`
             });
