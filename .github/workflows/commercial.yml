@@ -1,0 +1,118 @@
+# .github/workflows/commercial.yml
+# 태그 자동 생성 워크플로우
+name: commercial
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # pr 커밋 메시지 생성
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Create Git tag with KST timestamp
+        id: create_tag
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+          YEAR=$(TZ="Asia/Seoul" date +'%Y')
+          MONTH=$(TZ="Asia/Seoul" date +'%m')
+          DAY=$(TZ="Asia/Seoul" date +'%d')
+          HOUR=$(TZ="Asia/Seoul" date +'%H')
+          MINUTE=$(TZ="Asia/Seoul" date +'%M')
+          SECOND=$(TZ="Asia/Seoul" date +'%S')
+          TAG="v${YEAR}-${MONTH}-${DAY}.${HOUR}.${MINUTE}.${SECOND}"
+
+          echo "📌 태그 생성: $TAG"
+
+          git tag "$TAG"
+          git push origin "$TAG"
+
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate release notes
+        id: generate_notes
+        run: |
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
+          CURRENT_TAG="${{ steps.create_tag.outputs.tag }}"
+          PREV_TAG=$(git tag --sort=-creatordate | grep -v "$CURRENT_TAG" | head -n 1)
+          echo "" > release-notes.md
+          if [ -z "$PREV_TAG" ]; then
+            RANGE="$CURRENT_TAG"
+          else
+            RANGE="$PREV_TAG..$CURRENT_TAG"
+          fi
+          echo ":책갈피: 릴리즈 범위: $RANGE"
+          SECTIONS=(
+            "🎉 상용 배포:release"
+            "🛠️ 기능/화면 개발 (기획/요청 반영):improve"
+            "✨ 새로운 기능:feat"
+            "🔥 긴급 수정:hotfix"
+            "🐛 버그 수정:fix"
+            "🔎 SEO 최적화:seo"
+            "🧩 UI/UX 개선:ui/ux"
+            "🎨 스타일 수정:style"
+            "⚡ 성능 최적화:perf"
+            "🧹 코드 개선:refactor"
+            "🧪 테스트 추가/수정:test"
+            "📝 문서 작성 및 수정:docs"
+            "🔧 기타 변경사항:chore"
+            "📦 라이브러리/패키지 추가 및 업데이트:deps"
+            "♻️ CI/CD 수정:ci"
+            "⏪ 변경사항 되돌리기:revert"
+            "🚢 병합(Merge):merge"
+          )
+          FOUND_COMMITS=false
+          for section in "${SECTIONS[@]}"; do
+            TITLE="${section%%:*}"
+            PREFIX="${section##*:}"
+            COMMITS=$(git log $RANGE --grep="^$PREFIX:" -i --pretty=format:"%H|%s|%an" || echo "")
+            if [ ! -z "$COMMITS" ]; then
+              FOUND_COMMITS=true
+              echo "## $TITLE" >> release-notes.md
+              while IFS="|" read -r COMMIT_HASH COMMIT_MESSAGE AUTHOR_RAW; do
+                AUTHOR="@$(echo "$AUTHOR_RAW" | cut -d'@' -f1)"
+                SHORT_HASH=$(echo "$COMMIT_HASH" | cut -c1-7)
+                echo "- $COMMIT_MESSAGE $AUTHOR [\`$SHORT_HASH\`]($REPO_URL/commit/$COMMIT_HASH)" >> release-notes.md
+              done <<< "$COMMITS"
+              echo "" >> release-notes.md
+            fi
+          done
+          if [ "$FOUND_COMMITS" = false ]; then
+            echo "No new commits to include in release notes." >> release-notes.md
+          fi
+          NOTES=$(cat release-notes.md)
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          name: "🚀 ${{ steps.create_tag.outputs.tag }}"
+          body: ${{ steps.generate_notes.outputs.notes }}
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

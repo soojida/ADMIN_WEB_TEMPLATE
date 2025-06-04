@@ -1,0 +1,84 @@
+# .github/workflows/auto-label-pr.yml
+# PR 제목 또는 커밋 메시지 키워드 기반 자동 라벨링 워크플로우
+name: Auto Label PR
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize] # PR 업데이트 및 커밋 추가도 감지
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto-label and create if missing
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // 커밋 리스트 가져오기
+            const commits = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+
+            // 제목과 모든 커밋 메시지를 합쳐서 키워드 탐색
+            const commitMessages = commits.data.map(c => c.commit.message.toLowerCase()).join(' ');
+            const combined = `${pr.title.toLowerCase()} ${commitMessages}`;
+
+            const labelMap = [
+              { keyword: 'fix', label: 'fix', color: 'D73A4A' },
+              { keyword: 'feat', label: 'feat', color: 'FFC445' },
+              { keyword: 'style', label: 'style', color: '4CBFA0' },
+              { keyword: 'refactor', label: 'refactor', color: 'AA70D6' },
+              { keyword: 'chore', label: 'chore', color: 'FFFFFF' },
+              { keyword: 'hotfix', label: 'hotfix', color: '006b75' },
+              { keyword: 'docs', label: 'docs', color: 'dddddd' },
+              { keyword: 'perf', label: 'perf', color: '75C770' },
+              { keyword: 'test', label: 'test', color: '945E2E' },
+              { keyword: 'merge', label: 'merge', color: 'FF9029' },
+              { keyword: 'ci', label: 'ci', color: '4C5EBF' },
+              { keyword: 'revert', label: 'revert', color: '1C5990' },
+              { keyword: 'ui/ux', label: 'ui/ux', color: 'E33FA7' },
+              { keyword: 'improve', label: 'improve', color: 'eeeeee' },
+              { keyword: 'seo', label: 'seo', color: 'AA9CE1' },
+              { keyword: 'release', label: 'release', color: '3D024A' }
+            ];
+
+            const existingLabels = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const labelsToAdd = [];
+
+            for (const { keyword, label, color } of labelMap) {
+              if (combined.includes(keyword)) {
+                const labelExists = existingLabels.data.some(
+                  l => l.name.toLowerCase() === label.toLowerCase()
+                );
+
+                if (!labelExists) {
+                  await github.rest.issues.createLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    name: label,
+                    color: color,
+                    description: `${label} 라벨 (자동 생성됨)`
+                  });
+                }
+
+                labelsToAdd.push(label);
+              }
+            }
+
+            if (labelsToAdd.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: labelsToAdd
+              });
+            }
