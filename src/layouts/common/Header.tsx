@@ -65,7 +65,7 @@ const HeaderLayout = styled.div`
   justify-content: space-between;
   height: 52px;
   flex: 0 0 52px;
-  padding: 0 32px;
+  padding: 0 26px;
   background: ${({ theme }) => theme.color.primary};
 `;
 const HeaderLogo = styled.div`
