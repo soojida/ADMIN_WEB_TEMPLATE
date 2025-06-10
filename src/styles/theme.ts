@@ -1,6 +1,6 @@
 // 기본 색상
 export const color = {
-  primary: "#101828",
+  primary: "#212224",
   secondary: "#C1F65E",
 
   white: "#FFFFFF",

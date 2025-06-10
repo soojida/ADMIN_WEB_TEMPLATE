@@ -18,14 +18,21 @@ import logoBI from "@/assets/logo.svg";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import styled from "styled-components";
 import ErrorMessage from "@/components/atoms/message/ErrorMessage";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   return (
     <LoginLayout
       logo={logoBI}
       footer={
-        <Button className="w-full" variant="primary-dark" size="large">
+        <Button
+          className="w-full"
+          variant="primary-dark"
+          size="large"
+          onClick={() => navigate("/main")}
+        >
           로그인
         </Button>
       }

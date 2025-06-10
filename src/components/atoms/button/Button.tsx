@@ -13,7 +13,12 @@ export type ButtonProps = {
   // 버튼 안의 내용
   children?: React.ReactNode;
   // 버튼의 색상 설정
-  variant?: "primary" | "secondary" | "primary-outline" | "primary-dark";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "primary-outline"
+    | "primary-dark"
+    | "dark";
   // 버튼의 크기 설정
   size?: "xsmall" | "small" | "medium" | "large";
   // 버튼의 모양 설정

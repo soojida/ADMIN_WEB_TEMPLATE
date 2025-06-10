@@ -4,7 +4,7 @@ import styled from "styled-components";
 type DefaultLayoutProps = {
   className?: string;
   header?: React.ReactNode;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   footer?: React.ReactNode;
 };
 

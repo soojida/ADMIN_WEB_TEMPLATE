@@ -26,10 +26,14 @@ export const getVariantStyle = (variant: ButtonProps["variant"]) => {
         color: ${({ theme }) => theme.color.white};
         background: ${({ theme }) => theme.color.gray900};
       `;
+    case "dark":
+      return css`
+        color: ${({ theme }) => theme.color.white};
+        background: ${({ theme }) => theme.color.gray900};
+      `;
     default:
       return css`
-        color: ${({ theme }) => theme.color.gray900};
-        background: ${({ theme }) => theme.color.white};
+        color: ${({ theme }) => theme.color.white};
       `;
   }
 };
