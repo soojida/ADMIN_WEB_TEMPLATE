@@ -37,16 +37,10 @@ const SidemenuLayout = styled.div`
   position: relative;
   width: 240px;
   height: 100%;
-
   padding: 16px 12px;
   overflow: auto;
   border-right: 1px solid ${({ theme }) => theme.color.gray200};
-
-  /* 슬라이드 효과 */
-
-  transition:
-    transform 0.3s ease,
-    flex-basis 0.3s ease;
+  flex: 0 0 240px;
 `;
 
 const SideMenuList = styled.ul``;
