@@ -1,7 +1,8 @@
-// style
+// 공통
 import { css } from "styled-components";
-
 import { transparentize } from "polished";
+
+// 컴포넌트
 import { TooltipProps } from "@/components/atoms/tooltip/Tooltip";
 
 export const getBackgroundStyle = (background: TooltipProps["background"]) => {
