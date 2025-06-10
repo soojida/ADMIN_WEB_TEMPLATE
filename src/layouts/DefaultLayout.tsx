@@ -20,8 +20,8 @@ const DefaultLayout = ({
       <LayoutInner>
         {header && <LayoutHeader>{header}</LayoutHeader>}
         <LayoutContents>{children}</LayoutContents>
-        {footer && <LayoutFooter>{footer}</LayoutFooter>}
       </LayoutInner>
+      {footer && <LayoutFooter>{footer}</LayoutFooter>}
     </LayoutContainer>
   );
 };
@@ -29,11 +29,15 @@ const DefaultLayout = ({
 export default React.memo(DefaultLayout);
 
 const LayoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
 `;
 export const LayoutInner = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 24px;
   width: 100%;
   height: 100%;
@@ -74,6 +78,7 @@ const LayoutContents = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  height: 100%;
 `;
 const LayoutFooter = styled.div`
   display: flex;

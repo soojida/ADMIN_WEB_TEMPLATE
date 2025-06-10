@@ -1,15 +1,15 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import { LoginPage } from "../pages/login/LoginPage";
-import { MainPage } from "@/pages/MainPage";
+// import { MainPage } from "@/pages/MainPage";
+import { testRoutes } from "./testRoutes";
 
 const Router = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="*" element={<Navigate to="/" />} />
-      <Route path="/main" element={<MainPage />} />
-    </Routes>
-  );
+  const routes = useRoutes([
+    { path: "/", element: <LoginPage /> },
+    { path: "*", element: <Navigate to="/" /> },
+    ...testRoutes,
+  ]);
+  return routes;
 };
 
 export default Router;
