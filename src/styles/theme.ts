@@ -1,6 +1,7 @@
 // 기본 색상
 export const color = {
-  primary: "#C1F65E",
+  primary: "#101828",
+  secondary: "#C1F65E",
 
   white: "#FFFFFF",
   black: "#000000",
@@ -29,12 +30,15 @@ export const color = {
   blueGray600: "#3e4784",
   blueGray700: "#363f72",
   blueGray800: "#293056",
-  blueGray900: "#1012323",
+  blueGray900: "#101828",
   blueGray950: "#0d0f1c",
 
   // action
-  error: "#ff0000",
+  error: "#e7290f",
   errorDark: "#ce2929",
+
+  // background
+  background: "#f6f7f8",
 };
 
 export const theme = {
