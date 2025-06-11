@@ -6,13 +6,14 @@ import styled from "styled-components";
 import Button, { ButtonProps } from "./Button";
 
 type ButtonGroupProps = {
-  buttons: (ButtonProps & { text: string })[];
+  buttons: (ButtonProps & { text: string | React.ReactNode })[];
   className?: string;
+  style?: React.CSSProperties;
 };
 
-const ButtonGroup = ({ buttons, className }: ButtonGroupProps) => {
+const ButtonGroup = ({ buttons, className, style }: ButtonGroupProps) => {
   return (
-    <ButtonGroupForm className={className}>
+    <ButtonGroupForm className={className} style={style}>
       {buttons.map(({ text, ...rest }, idx) => (
         <Button key={idx} {...rest}>
           {text} {/* text를 children으로 사용 */}

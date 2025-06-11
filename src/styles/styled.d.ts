@@ -41,4 +41,13 @@ declare module "styled-components" {
       background: string;
     };
   }
+
+  // mode를 유지하며, DefaultTheme에 포함 시키기 (App.tsx 파일 내 다크/라이트 모드 설정을 위함)
+  export interface DefaultTheme extends mode {
+    background: string;
+    text: string;
+    headerBg: string;
+    headerText: string;
+    border: string;
+  }
 }
