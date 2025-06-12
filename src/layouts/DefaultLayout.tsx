@@ -78,7 +78,6 @@ const LayoutContents = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  height: 100%;
 `;
 const LayoutFooter = styled.div`
   display: flex;
@@ -87,4 +86,9 @@ const LayoutFooter = styled.div`
   padding: 0 32px;
   flex: 0 0 62px;
   border-top: 1px solid ${({ theme }) => theme.color.gray200};
+
+  // 자식 요소가 2개일 경우 적용 (버튼 그룹 정렬)
+  &:has(> *:nth-child(2):last-child) {
+    justify-content: space-between;
+  }
 `;

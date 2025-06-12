@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <HeaderLayout>
-      <HeaderLogo onClick={() => navigate("/main")}>
+      <HeaderLogo onClick={() => navigate("/sample")}>
         {/* BI 표출 영역입니다. */}
         <img src={isDarkMode ? logoLightBI : logoDarkBI} alt="BI" />
       </HeaderLogo>

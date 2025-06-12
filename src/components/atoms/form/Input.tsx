@@ -32,6 +32,8 @@ export type InputProps = {
   errorMessage?: string;
   // 스타일
   style?: React.CSSProperties;
+  // 데이터
+  value?: string | number;
 };
 
 const Input = ({
@@ -48,6 +50,7 @@ const Input = ({
   max,
   errorMessage,
   style,
+  value,
   ...rest
 }: InputProps) => {
   const [dynamicMin] = useState(min ?? 0);
@@ -62,7 +65,7 @@ const Input = ({
       <InputStyle
         type={type}
         placeholder={placeholder}
-        defaultValue={dynamicValue}
+        value={value}
         disabled={disabled}
         onChange={onHandleInputChange}
         onKeyDown={onKeyDown}

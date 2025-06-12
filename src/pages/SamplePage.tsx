@@ -19,14 +19,6 @@ const SamplePage = () => {
     <DefaultLayout
       // 페이지 제목 노출 시, 사용합니다.
       header="페이지 제목"
-      // footer={
-      //   <ButtonGroup
-      //     buttons={[
-      //       { text: "취소", variant: "primary" },
-      //       { text: "저장", variant: "primary" },
-      //     ]}
-      //   />
-      // }
     >
       {/* 검색 영역입니다. */}
       <Card>

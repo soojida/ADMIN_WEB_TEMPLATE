@@ -31,7 +31,7 @@ export const LoginPage = () => {
           className="w-full"
           variant="primary-dark"
           size="large"
-          onClick={() => navigate("/main")}
+          onClick={() => navigate("/sample")}
         >
           로그인
         </Button>

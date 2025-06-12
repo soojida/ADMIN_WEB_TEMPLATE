@@ -28,4 +28,5 @@ const Container = styled.div`
 const LayoutInner = styled.div`
   display: flex;
   height: 100%;
+  overflow: auto;
 `;

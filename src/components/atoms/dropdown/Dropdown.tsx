@@ -24,6 +24,10 @@ export type DropdownProps = {
   placeholder?: string;
   // 비활성화 여부
   disabled?: boolean;
+  // 데이터
+  value?: string | number;
+  // 선택 이벤트
+  onSelect?: () => void;
 };
 
 const Dropdown = ({
