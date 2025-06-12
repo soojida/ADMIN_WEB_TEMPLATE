@@ -1,10 +1,10 @@
 // 기본 색상
 
-import { DefaultTheme } from "styled-components";
+import { DefaultTheme, useTheme } from "styled-components";
 
 export const color = {
   primary: "#212224",
-  secondary: "#62aaea",
+  secondary: "#375c89",
 
   white: "#FFFFFF",
   black: "#000000",
@@ -46,7 +46,8 @@ export const color = {
 
 // 다크 모드
 export const darkTheme: DefaultTheme = {
-  background: "#212224",
+  // background: "#212224",
+  background: color.primary,
   text: "#ffffff",
   headerBg: "#212224",
   headerText: "#ffffff",
@@ -62,7 +63,7 @@ export const lightTheme: DefaultTheme = {
   text: "#212224",
   headerBg: "#ffffff",
   headerText: "#212224",
-  border: "#eaecf5",
+  border: "#e4e7ec",
   color: {
     ...color,
   },

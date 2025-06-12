@@ -3,10 +3,11 @@ import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./styles/theme";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import Router from "./routes/Router";
-import { useThemeStore } from "./stores/common/useThemeSotre";
+import { useThemeStore } from "./stores/common/useThemeStore";
 
 // 실제 화면에 보여질 UI 컴포넌트 루트 구성 요소
 const App = () => {
+  // 다크/라이트 모드 전환
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   return (
