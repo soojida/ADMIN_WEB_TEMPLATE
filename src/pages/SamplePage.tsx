@@ -11,10 +11,14 @@ import Dropdown from "@/components/atoms/dropdown/Dropdown";
 import Input from "@/components/atoms/form/Input";
 import Button from "@/components/atoms/button/Button";
 
+// 상태 관리
+import { useModalStore } from "@/stores/components/useModalStore";
+
 /* 👀 DefaultLayout.tsx를 기반으로 ~Page.tsx 구성하며,
     사용 방법을 위해 해당 영역에 노출 시킴.
     실 프로젝트 진행시 해당 컴포넌트 제거 후 outlet으로 연동 */
 const SamplePage = () => {
+  const { onOpenModal } = useModalStore();
   return (
     <DefaultLayout
       // 페이지 제목 노출 시, 사용합니다.
@@ -86,7 +90,14 @@ const SamplePage = () => {
           <ButtonGroup
             buttons={[
               { text: "등록", variant: "primary" },
-              // { text: "엑셀 다운로드", variant: "secondary" },
+              // 버튼 클릭 후 모달 표출 시 사용합니다.
+              {
+                text: "모달 열기",
+                variant: "primary-outline",
+                onClick: () => {
+                  onOpenModal("sample");
+                },
+              },
             ]}
           />
         }

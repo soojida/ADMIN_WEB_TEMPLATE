@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 // 레이아웃
 import Header from "@/layouts/common/Header";
 import Sidemenu from "@/layouts/common/Sidemenu";
+import ModalGroup from "@/layouts/common/ModalGroup";
 
 const MainPage = () => {
   return (
@@ -14,6 +15,7 @@ const MainPage = () => {
         <Sidemenu />
         <Outlet />
       </LayoutInner>
+      <ModalGroup />
     </Container>
   );
 };

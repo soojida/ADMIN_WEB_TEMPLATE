@@ -41,7 +41,7 @@ const Modal = ({
   footer,
   children,
   background = "dimmed",
-  width,
+  width = "420px",
 }: ModalProps) => {
   const { onCloseModal } = useModalStore();
   const theme = useTheme();
@@ -51,23 +51,30 @@ const Modal = ({
       <ModalArea background={background}>
         <ModalFrame background={background}>
           <ModalInner className="modal__inner" width={width}>
+            {/* 모달 헤더 영역 입니다. */}
             {isHeader && (
               <ModalHeader className="modal__header">
                 {title && <ModalTitle>{title}</ModalTitle>}
                 <Button
+                  style={{ width: "auto" }}
                   className="icon"
                   onClick={() => {
+                    // 모달 닫기
                     onCloseModal();
                     if (onClick) onClick();
                   }}
                 >
-                  <IoCloseOutline style={{ stroke: theme.color.gray400 }} />
+                  <IoCloseOutline
+                    style={{ stroke: theme.color.gray400, fontSize: "20px" }}
+                  />
                 </Button>
               </ModalHeader>
             )}
+            {/* 모달 컨텐츠 영역 입니다. */}
             <ModalContents className="modal__contents">
               {children}
             </ModalContents>
+            {/* 모달 푸터 영역 입니다. */}
             {footer && (
               <ModalFooter className="modal__footer">{footer}</ModalFooter>
             )}
@@ -141,15 +148,8 @@ export const ModalContents = styled.div`
   font-size: 14px;
 `;
 export const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
   padding: 8px 20px 16px;
-
-  .btn__group {
-    justify-content: flex-end;
-
-    button {
-      flex: 0 0 auto;
-      padding: 0 24px;
-    }
-  }
 `;
