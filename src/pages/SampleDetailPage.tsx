@@ -9,6 +9,7 @@ import ButtonGroup from "@/components/atoms/button/ButtonGroup";
 import TableLayout from "@/layouts/common/TableLayout";
 import VerticalTable from "@/components/atoms/table/VerticalTable";
 import Button from "@/components/atoms/button/Button";
+import Tab from "@/components/atoms/tab/Tab";
 
 const SampleDetailPage = () => {
   const navigate = useNavigate();
@@ -133,6 +134,54 @@ const SampleDetailPage = () => {
           />
         }
       />
+      {/* 탭 컨텐츠 영역입니다. */}
+      <Tab
+        shape="round"
+        tabItems={[
+          {
+            tabItem: "탭 제목",
+            content: (
+              <VerticalTable
+                // 해당 형식을 사용하여, const로 테이블 바디 영역을 작업해주세요.
+                body={[
+                  // 1행 2열
+                  {
+                    headers: [
+                      {
+                        value: "타이틀",
+                        type: "input",
+                        placeholder: "내용을 입력해주세요.",
+                      },
+                      {
+                        value: "타이틀",
+                        type: "dropdown",
+                        placeholder: "전체",
+                        items: ["전체"],
+                      },
+                    ],
+                  },
+                  // 2행 2열
+                  {
+                    headers: [
+                      {
+                        value: "타이틀",
+                        type: "input",
+                        placeholder: "내용을 입력해주세요.",
+                      },
+                      {
+                        value: "타이틀",
+                        type: "input",
+                        placeholder: "내용을 입력해주세요.",
+                      },
+                    ],
+                  },
+                ]}
+              />
+            ),
+          },
+          { tabItem: "탭 제목", content: "탭 컨텐츠" },
+        ]}
+      ></Tab>
     </DefaultLayout>
   );
 };
