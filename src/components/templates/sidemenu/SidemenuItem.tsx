@@ -52,6 +52,7 @@ const SidemenuItem = ({
 
       {item.children && (
         <ChildrenMenuList
+          item={item}
           open={isOpen}
           className="sub-menu-list"
           ref={childrenMenuRef}
@@ -104,17 +105,21 @@ const MenuItemToggleIcon = styled.span<{ open: boolean }>`
 
 const MenuItemTitle = styled.span`
   color: ${({ theme }) => theme.color.gray900};
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
 `;
 
-const ChildrenMenuList = styled.ul<{ open: boolean; $maxHeight: any }>`
+const ChildrenMenuList = styled.ul<{
+  open: boolean;
+  $maxHeight: any;
+  item: SideMenuLists;
+}>`
   max-height: ${({ open, $maxHeight }) => (open ? $maxHeight : "0px")};
   overflow: hidden;
   transition: max-height 0.15s ease;
 
   li {
-    padding-left: 26px;
+    padding-left: ${({ item }) => (item.icon ? "26px" : "12px")};
     border-radius: 6px;
     transition: all 0.25s ease;
     &.active {

@@ -13,7 +13,7 @@ type SidemenuState = {
 export const useSidemenuStore = create<SidemenuState>()(
   persist(
     (set) => ({
-      selectedMenu: "dashboard/date", // 초기 선택된 메뉴의 path
+      selectedMenu: "/", // 초기 선택된 메뉴의 path
       setSelectedMenu: (menu: string) => {
         set({ selectedMenu: menu });
       },
