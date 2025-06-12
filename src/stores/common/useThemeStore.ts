@@ -7,7 +7,7 @@ type ThemeStore = {
 };
 
 export const useThemeStore = create<ThemeStore>((set) => ({
-  isDarkMode: true, // false: 라이트 모드 / ture: 다크 모드
+  isDarkMode: false, // false: 라이트 모드 / ture: 다크 모드
   toggleTheme: () => set((state: any) => ({ isDarkMode: !state.isDarkMode })),
   setIsDarkMode: (value: boolean) => set({ isDarkMode: value }),
 }));

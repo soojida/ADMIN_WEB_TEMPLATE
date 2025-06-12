@@ -30,6 +30,8 @@ export type InputProps = {
   max?: number;
   // 에러메세지
   errorMessage?: string;
+  // 스타일
+  style?: React.CSSProperties;
 };
 
 const Input = ({
@@ -45,6 +47,7 @@ const Input = ({
   min,
   max,
   errorMessage,
+  style,
   ...rest
 }: InputProps) => {
   const [dynamicMin] = useState(min ?? 0);
@@ -55,7 +58,7 @@ const Input = ({
   });
 
   return (
-    <InputForm className={className}>
+    <InputForm className={className} style={style}>
       <InputStyle
         type={type}
         placeholder={placeholder}
@@ -97,6 +100,7 @@ const InputStyle = styled.input<{ icon: any }>`
   padding: ${({ icon }) => (icon ? "0 42px 0 12px" : "0 12px")};
   font-size: 13px;
   border: 1px solid ${({ theme }) => theme.color.blueGray100};
+  background: ${({ theme }) => theme.color.white};
   border-radius: 4px;
 
   &:focus,

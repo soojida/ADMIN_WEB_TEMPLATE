@@ -1,15 +1,15 @@
 // 페이지
 import MainPage from "@/pages/MainPage";
-import TestPage from "@/pages/TestPage";
+import SamplePage from "@/pages/SamplePage";
 
-export const testRoutes = [
+export const sampleRoutes = [
   {
     path: "/main",
     element: <MainPage />,
     children: [
       {
         index: true,
-        element: <TestPage />,
+        element: <SamplePage />,
       },
     ],
   },

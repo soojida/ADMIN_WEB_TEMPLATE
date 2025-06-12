@@ -1,13 +1,13 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { LoginPage } from "../pages/login/LoginPage";
-// import { MainPage } from "@/pages/MainPage";
-import { testRoutes } from "./testRoutes";
+
+import { sampleRoutes } from "./sampleRoutes";
 
 const Router = () => {
   const routes = useRoutes([
     { path: "/", element: <LoginPage /> },
     { path: "*", element: <Navigate to="/" /> },
-    ...testRoutes,
+    ...sampleRoutes,
   ]);
   return routes;
 };

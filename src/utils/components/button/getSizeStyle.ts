@@ -13,7 +13,7 @@ export const getSizeStyle = (size: ButtonProps["size"]) => {
       `;
     case "small":
       return css`
-        height: 30px;
+        height: 32px;
         padding: 0 12px;
       `;
     case "medium":

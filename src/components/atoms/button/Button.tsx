@@ -16,9 +16,11 @@ export type ButtonProps = {
   variant?:
     | "primary"
     | "secondary"
+    | "gray"
     | "primary-outline"
     | "primary-dark"
-    | "dark";
+    | "dark"
+    | "";
   // 버튼의 크기 설정
   size?: "xsmall" | "small" | "medium" | "large";
   // 버튼의 모양 설정
@@ -33,6 +35,8 @@ export type ButtonProps = {
   className?: string;
   // 버튼 클릭 이벤트
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  // 비활성 여부
+  disabled?: boolean;
 };
 
 const Button = ({
@@ -45,6 +49,7 @@ const Button = ({
   icon,
   className,
   onClick,
+  disabled,
 }: ButtonProps) => {
   return (
     <ButtonStyle
@@ -55,6 +60,7 @@ const Button = ({
       direction={direction}
       style={style}
       onClick={onClick}
+      disabled={disabled}
     >
       {icon}
       {children}

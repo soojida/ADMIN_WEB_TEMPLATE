@@ -19,7 +19,7 @@ import useClickOutside from "@/hooks/common/useClickOutside";
 import ButtonGroup from "@/components/atoms/button/ButtonGroup";
 
 // 상태 관리
-import { useThemeStore } from "@/stores/common/useThemeSotre";
+import { useThemeStore } from "@/stores/common/useThemeStore";
 import { transparentize } from "polished";
 
 const Header = () => {
@@ -45,7 +45,7 @@ const Header = () => {
             {
               text: (
                 <BsMoonStarsFill
-                  style={{ fill: isDarkMode ? "#c1f65e" : "#dddddd" }}
+                  style={{ fill: isDarkMode ? "#fbb44d" : "#dddddd" }}
                 />
               ),
               size: "small",
@@ -89,7 +89,12 @@ const Header = () => {
           {/* 게정 부가 정보 표출 영역입니다. */}
           {isToggle && (
             <UtilTooltip isDarkMode={isDarkMode}>
-              <Button onClick={() => navigate("/login")}>로그아웃</Button>
+              <Button
+                onClick={() => navigate("/login")}
+                style={{ height: "32px", fontSize: "13px" }}
+              >
+                로그아웃
+              </Button>
             </UtilTooltip>
           )}
         </UtilInner>
@@ -158,7 +163,7 @@ const UtilTooltip = styled.div<{ isDarkMode: boolean }>`
     ${({ theme, isDarkMode }) =>
       !isDarkMode
         ? theme.color.blueGray100
-        : transparentize(0.6, theme.color.blueGray100)};
+        : transparentize(0.6, theme.color.gray100)};
 `;
 
 const ThemeButtonGroup = styled(ButtonGroup)`
