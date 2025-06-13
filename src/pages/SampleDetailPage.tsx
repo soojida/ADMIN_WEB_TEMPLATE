@@ -66,8 +66,18 @@ const SampleDetailPage = () => {
                 headers: [
                   {
                     value: "타이틀",
-                    type: "input",
-                    placeholder: "내용을 입력해주세요.",
+                    type: "radio",
+                    radios: [
+                      {
+                        label: "라디오1",
+                        value: "1",
+                      },
+                      {
+                        label: "라디오2",
+                        value: "2",
+                        defaultChecked: true,
+                      },
+                    ],
                   },
                   {
                     value: "타이틀",
@@ -104,8 +114,9 @@ const SampleDetailPage = () => {
                 headers: [
                   {
                     value: "타이틀",
-                    type: "input",
-                    placeholder: "내용을 입력해주세요.",
+                    type: "file",
+                    label: "파일 선택",
+                    placeholder: "파일을 선택해주세요. (.jpg, .jpeg, .png)",
                   },
                   {
                     value: "타이틀",
@@ -120,12 +131,12 @@ const SampleDetailPage = () => {
                 headers: [
                   {
                     value: "타이틀",
-                    type: "input",
+                    type: "textarea",
                     placeholder: "내용을 입력해주세요.",
                   },
                   {
                     value: "타이틀",
-                    type: "input",
+                    type: "textarea",
                     placeholder: "내용을 입력해주세요.",
                   },
                 ],

@@ -5,10 +5,21 @@ import styled from "styled-components";
 // 컴포넌트
 import Input from "../form/Input";
 import Dropdown from "../dropdown/Dropdown";
+import RadioField, { RadioOption } from "../form/RadioField";
+import Textarea from "../form/Textarea";
+import Editor from "../form/Editor";
 
 type TableCell = {
   // 테이블 타입
-  type?: "input" | "text" | "dropdown" | "textarea" | "datepicker" | "radio";
+  type?:
+    | "input"
+    | "text"
+    | "dropdown"
+    | "textarea"
+    | "datepicker"
+    | "radio"
+    | "file"
+    | "editor";
   // 테이블 값
   value?: string;
   // 테이블 placeholder
@@ -27,8 +38,12 @@ type TableCell = {
   necessary?: boolean;
   // 테이블 설명
   desc?: string;
-  // 데이터
+  // 드롭다운 컴포넌트 데이터
   items?: string[];
+  // 라디오 컴포넌트 데이터
+  radios?: RadioOption[];
+  // 라벨의 속성
+  label?: string;
 };
 
 type TableGroup = {
@@ -72,17 +87,42 @@ const VerticalTable = ({
             value={cell.dataValue}
           />
         );
+      case "file":
+        return (
+          <Input
+            className={cell.className}
+            type={cell.type}
+            onChange={cell.onChange}
+            labelProps={{ label: cell.label }}
+            placeholder={cell.placeholder}
+            value={cell.dataValue || ""}
+            disabled={cell.disabled}
+          />
+        );
       case "dropdown":
         return (
           <Dropdown
             id={cell.id}
             items={cell.items}
             placeholder={cell.placeholder}
-            value={cell.value}
+            value={cell.dataValue}
             disabled={cell.disabled}
             onSelect={cell.event?.onSelect}
           />
         );
+      case "radio":
+        return <RadioField radios={cell.radios} />;
+      case "textarea":
+        return (
+          <Textarea
+            placeholder={cell.placeholder}
+            disabled={cell.disabled}
+            onChange={cell.event?.onChange}
+            value={cell.dataValue}
+          />
+        );
+      case "editor":
+        return <Editor />;
       default:
         return cell.value;
     }

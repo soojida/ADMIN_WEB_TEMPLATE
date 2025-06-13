@@ -1,3 +1,6 @@
+// 공통
+import { useNavigate } from "react-router-dom";
+
 // 레이아웃
 import DefaultLayout from "@/layouts/DefaultLayout";
 
@@ -18,7 +21,9 @@ import { useModalStore } from "@/stores/components/useModalStore";
     사용 방법을 위해 해당 영역에 노출 시킴.
     실 프로젝트 진행시 해당 컴포넌트 제거 후 outlet으로 연동 */
 const SamplePage = () => {
+  const navigate = useNavigate();
   const { onOpenModal } = useModalStore();
+
   return (
     <DefaultLayout
       // 페이지 제목 노출 시, 사용합니다.
@@ -89,7 +94,13 @@ const SamplePage = () => {
         utils={
           <ButtonGroup
             buttons={[
-              { text: "등록", variant: "primary" },
+              {
+                text: "상세페이지로 이동",
+                variant: "primary",
+                onClick: () => {
+                  navigate("/sample/detail");
+                },
+              },
               // 버튼 클릭 후 모달 표출 시 사용합니다.
               {
                 text: "모달 열기",

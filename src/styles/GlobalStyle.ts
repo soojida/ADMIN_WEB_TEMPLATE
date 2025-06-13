@@ -89,13 +89,6 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  input::placeholder,
-  textarea::placeholder {
-    letter-spacing: -0.03rem;
-    font-size: 13px;
-    color: #989ca8;
-  }
-
   input[type="time"],
   input[type="date"] {
     font-size: 12px;

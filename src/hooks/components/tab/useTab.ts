@@ -1,4 +1,4 @@
-// lib
+// 공통
 import { useState } from "react";
 
 export const useTab = ({ isActive = 0, onClick }: any) => {
