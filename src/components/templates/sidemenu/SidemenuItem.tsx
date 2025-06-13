@@ -58,8 +58,8 @@ const SidemenuItem = ({
           ref={childrenMenuRef}
           $maxHeight={maxHeight}
         >
-          {item.children.map((child: any) => (
-            <SidemenuItem key={child.title} item={child} />
+          {item.children.map((child: any, idx: number) => (
+            <SidemenuItem key={`${child.title}-${idx}`} item={child} />
           ))}
         </ChildrenMenuList>
       )}
