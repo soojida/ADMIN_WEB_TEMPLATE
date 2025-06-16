@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     color: ${({ theme }) => theme.color.gray900};
     font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
   }
   body {
     width: 100%;

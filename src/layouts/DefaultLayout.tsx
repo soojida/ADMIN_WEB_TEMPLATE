@@ -41,7 +41,7 @@ export const LayoutInner = styled.div`
   gap: 24px;
   width: 100%;
   height: 100%;
-  padding: 24px;
+  padding: 24px 32px;
   overflow: auto;
 `;
 const LayoutHeader = styled.div`

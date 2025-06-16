@@ -1,12 +1,16 @@
 // 공통
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 // 컴포넌트
-import SidemenuItem from "@/components/templates/\bsidemenu/SidemenuItem";
+import SidemenuItem from "@/components/templates/sidemenu/SidemenuItem";
+import Button from "@/components/atoms/button/Button";
 
 // 상수
 import { sidemenuConst } from "@/constants/components/SidemenuConst";
+
+// 아이콘
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 export type SideMenuLists = {
   // 메뉴의 제목
@@ -20,27 +24,73 @@ export type SideMenuLists = {
 };
 
 const Sidemenu = () => {
+  const [isMenuFolded, setIsMenuFolded] = useState<boolean>(true);
+
   return (
-    <SidemenuLayout>
-      <SideMenuList>
-        {sidemenuConst.map((menu: any, idx: number) => {
-          return <SidemenuItem key={idx} item={menu} />;
-        })}
-      </SideMenuList>
-    </SidemenuLayout>
+    <>
+      <SidemenuLayout folded={isMenuFolded}>
+        <SideMenuList>
+          {sidemenuConst.map((menu: any, idx: number) => {
+            return <SidemenuItem key={idx} item={menu} />;
+          })}
+        </SideMenuList>
+      </SidemenuLayout>
+      <FoldingButton
+        folded={isMenuFolded}
+        onClick={() => setIsMenuFolded((state) => !state)}
+        icon={
+          isMenuFolded ? (
+            <IoIosArrowBack
+              style={{
+                fontSize: "15px",
+              }}
+            />
+          ) : (
+            <IoIosArrowForward
+              style={{
+                fontSize: "15px",
+              }}
+            />
+          )
+        }
+      />
+    </>
   );
 };
 
 export default React.memo(Sidemenu);
 
-const SidemenuLayout = styled.div`
+const SidemenuLayout = styled.div<{ folded: boolean }>`
   position: relative;
   width: 240px;
   height: 100%;
-  padding: 16px 12px;
+  left: ${({ folded }) => (folded ? "0" : "-240px")};
+  flex: 0 0 ${({ folded }) => (folded ? "240px" : "0")};
   overflow: auto;
   border-right: 1px solid ${({ theme }) => theme.color.gray200};
-  flex: 0 0 240px;
+  background: ${({ theme }) => theme.color.white};
+  transform: translateX(${({ folded }) => (folded ? "0" : "-100%")});
+  transition:
+    transform 0.3s ease,
+    flex 0.3s ease;
 `;
 
-const SideMenuList = styled.ul``;
+const SideMenuList = styled.ul`
+  padding: 16px 12px;
+  height: 100%;
+`;
+const FoldingButton = styled(Button)<{ folded: boolean }>`
+  position: absolute;
+  top: 50%;
+  left: ${({ folded }) => (folded ? "240px" : "0")};
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 24px;
+  height: 52px;
+  padding: 0;
+  margin-left: -1px;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid ${({ theme }) => theme.color.blueGray100};
+  background-color: white;
+  transition: left 0.3s ease;
+`;

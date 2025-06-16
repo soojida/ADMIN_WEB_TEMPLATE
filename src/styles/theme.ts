@@ -41,7 +41,7 @@ export const color = {
   errorDark: "#ce2929",
 
   // background
-  background: "#f6f7f8",
+  background: "#f8f9fb",
 };
 
 // 다크 모드
