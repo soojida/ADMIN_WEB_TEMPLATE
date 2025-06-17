@@ -263,7 +263,7 @@ const Thead = styled.thead<{ $headerAlign: string }>`
   position: sticky;
   top: 0;
   z-index: 99;
-  background: ${({ theme }) => theme.color.gray100};
+  background: ${({ theme }) => theme.color.background};
 
   tr {
     th {

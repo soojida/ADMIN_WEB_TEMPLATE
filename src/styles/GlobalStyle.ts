@@ -11,6 +11,11 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", sans-serif;
     font-weight: 400;
   }
+  /* 시간 popover 섹션 영역 여백 제거 */
+  .MuiMultiSectionDigitalClockSection-root::after{
+      height: auto!important;
+  }
+  
   body {
     width: 100%;
     height: 100%;

@@ -5,19 +5,33 @@ import styled from "styled-components";
 // 컴포넌트
 import Input from "../form/Input";
 import Dropdown from "../dropdown/Dropdown";
-import RadioField, { RadioOption } from "../form/RadioField";
 import Textarea from "../form/Textarea";
 import Editor from "../form/Editor";
+import RadioField, {
+  RadioOption,
+} from "@/components/templates/field/RadioField";
+import CustomDatePicker from "../picker/CustomDatePicker";
+import CheckboxField, {
+  CheckboxOption,
+} from "@/components/templates/field/CheckboxField";
+import CustomTimePicker from "../picker/CustomTimePicker";
+import CustomDatePickerRange from "@/components/templates/range/CustomDatePickerRange";
+import CustomTimePickerRange from "@/components/templates/range/CustomTimePickerRange";
 
 type TableCell = {
   // 테이블 타입
   type?:
     | "input"
     | "text"
+    | "image"
     | "dropdown"
     | "textarea"
     | "datepicker"
+    | "datepickerRange"
+    | "timepicker"
+    | "timepickerRange"
     | "radio"
+    | "checkbox"
     | "file"
     | "editor";
   // 테이블 값
@@ -42,6 +56,8 @@ type TableCell = {
   items?: string[];
   // 라디오 컴포넌트 데이터
   radios?: RadioOption[];
+  // 체크박스 컴포넌트 데이터
+  checkboxs?: CheckboxOption[];
   // 라벨의 속성
   label?: string;
 };
@@ -99,6 +115,18 @@ const VerticalTable = ({
             disabled={cell.disabled}
           />
         );
+      case "image":
+        return (
+          <Input
+            className={cell.className}
+            type={cell.type}
+            onChange={cell.onChange}
+            labelProps={{ label: cell.label }}
+            placeholder={cell.placeholder}
+            value={cell.dataValue || ""}
+            disabled={cell.disabled}
+          />
+        );
       case "dropdown":
         return (
           <Dropdown
@@ -112,6 +140,8 @@ const VerticalTable = ({
         );
       case "radio":
         return <RadioField radios={cell.radios} />;
+      case "checkbox":
+        return <CheckboxField checkboxs={cell.checkboxs} />;
       case "textarea":
         return (
           <Textarea
@@ -121,6 +151,14 @@ const VerticalTable = ({
             value={cell.dataValue}
           />
         );
+      case "datepicker":
+        return <CustomDatePicker />;
+      case "datepickerRange":
+        return <CustomDatePickerRange />;
+      case "timepicker":
+        return <CustomTimePicker />;
+      case "timepickerRange":
+        return <CustomTimePickerRange />;
       case "editor":
         return <Editor />;
       default:
@@ -228,7 +266,7 @@ const Tbody = styled.tbody<{ $headerAlign: string; $contentsAlign: string }>`
         : props.$headerAlign === "left"
           ? "left"
           : "right"};
-    background: ${({ theme }) => theme.color.gray100};
+    background: ${({ theme }) => theme.color.background};
 
     p {
       margin-top: 8px;
