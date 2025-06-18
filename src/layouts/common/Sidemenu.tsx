@@ -24,6 +24,7 @@ export type SideMenuLists = {
 };
 
 const Sidemenu = () => {
+  // 사이드 메뉴 접힘/펼침 상태값 변경
   const [isMenuFolded, setIsMenuFolded] = useState<boolean>(true);
 
   return (

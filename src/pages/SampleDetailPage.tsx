@@ -43,29 +43,46 @@ const SampleDetailPage = () => {
           <VerticalTable
             // 해당 형식을 사용하여, const로 테이블 바디 영역을 작업해주세요.
             body={[
-              // 1행 2열
+              // 1행
               {
                 headers: [
                   {
-                    value: "타이틀",
-                    type: "input",
-                    placeholder: "내용을 입력해주세요.",
+                    value: "datepicker (날짜)",
+                    type: "datepicker",
+                    // placeholder: "내용을 입력해주세요.",
                     colspan: 2,
                   },
                   {
-                    value: "타이틀",
-                    type: "dropdown",
+                    value: "timepicker (시간)",
+                    type: "timepicker",
                     placeholder: "전체",
                     items: ["전체"],
                   },
                 ],
               },
-              // 2행 2열
+              // 2행
               {
-                group: "타이틀",
                 headers: [
                   {
-                    value: "타이틀",
+                    value: "datepickerRange (날짜 범위)",
+                    type: "datepickerRange",
+                    // placeholder: "내용을 입력해주세요.",
+                    colspan: 2,
+                  },
+                  {
+                    value: "timepickerRange (시간 범위)",
+                    type: "timepickerRange",
+                    placeholder: "전체",
+                    items: ["전체"],
+                  },
+                ],
+              },
+              // 3행
+              {
+                group: "group (병합)",
+                headers: [
+                  {
+                    value: "radio (라디오)",
                     type: "radio",
                     radios: [
                       {
@@ -80,16 +97,23 @@ const SampleDetailPage = () => {
                     ],
                   },
                   {
-                    value: "타이틀",
-                    type: "input",
-                    placeholder: "내용을 입력해주세요.",
+                    value: "checkbox (체크)",
+                    type: "checkbox",
+                    checkboxs: [
+                      {
+                        label: "체크1",
+                      },
+                      {
+                        label: "체크2",
+                      },
+                    ],
                   },
                 ],
               },
               {
                 headers: [
                   {
-                    value: "타이틀",
+                    value: "input (텍스트)",
                     type: "input",
                     placeholder: "내용을 입력해주세요.",
                     tdColspan: 3,
@@ -109,34 +133,34 @@ const SampleDetailPage = () => {
           <VerticalTable
             // 해당 형식을 사용하여, const로 테이블 바디 영역을 작업해주세요.
             body={[
-              // 1행 2열
+              // 1행
               {
                 headers: [
                   {
-                    value: "타이틀",
+                    value: "file (파일선택)",
                     type: "file",
                     label: "파일 선택",
                     placeholder: "파일을 선택해주세요. (.jpg, .jpeg, .png)",
                   },
                   {
-                    value: "타이틀",
+                    value: "dropdown (드롭다운)",
                     type: "dropdown",
                     placeholder: "전체",
-                    items: ["전체"],
+                    items: ["전체", "개별"],
                   },
                 ],
               },
-              // 2행 2열
+              // 2행
               {
                 headers: [
                   {
-                    value: "타이틀",
+                    value: "textarea (긴문장)",
                     type: "textarea",
                     placeholder: "내용을 입력해주세요.",
                   },
                   {
-                    value: "타이틀",
-                    type: "textarea",
+                    value: "image (썸네일)",
+                    type: "image",
                     placeholder: "내용을 입력해주세요.",
                   },
                 ],
@@ -155,7 +179,7 @@ const SampleDetailPage = () => {
               <VerticalTable
                 // 해당 형식을 사용하여, const로 테이블 바디 영역을 작업해주세요.
                 body={[
-                  // 1행 2열
+                  // 1행
                   {
                     headers: [
                       {
@@ -171,7 +195,7 @@ const SampleDetailPage = () => {
                       },
                     ],
                   },
-                  // 2행 2열
+                  // 2행
                   {
                     headers: [
                       {

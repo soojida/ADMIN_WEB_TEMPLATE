@@ -28,7 +28,7 @@ const CardForm = styled.div<CardProps>`
   flex-wrap: wrap;
   gap: 16px;
   padding: 24px;
-  background: ${({ theme }) => theme.color.gray100};
+  background: ${({ theme }) => theme.color.background};
   border: 1px solid ${({ theme }) => theme.color.gray200};
   border-radius: 4px;
 `;

@@ -3,8 +3,9 @@ import React from "react";
 
 // style
 import styled from "styled-components";
+import Label from "../label/Label";
 
-type CheckboxProps = {
+export type CheckboxProps = {
   className?: string;
   id?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,18 +23,21 @@ const Checkbox = ({
   disabled,
   onClick,
   label,
+  ...props
 }: CheckboxProps) => {
   return (
     <CheckboxForm className={className}>
-      <CheckboxInput
-        id={id}
-        type="checkbox"
-        onChange={onChange}
-        checked={checked}
-        disabled={disabled}
-        onClick={onClick}
-      />
-      {label && <CheckboxLabel htmlFor={id}>{label}</CheckboxLabel>}
+      <Label htmlFor={id} {...props}>
+        <CheckboxInput
+          id={id}
+          type="checkbox"
+          onChange={onChange}
+          checked={checked}
+          disabled={disabled}
+          onClick={onClick}
+        />
+        {label}
+      </Label>
     </CheckboxForm>
   );
 };
@@ -44,6 +48,15 @@ const CheckboxForm = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+  }
 `;
 
 const CheckboxInput = styled.input`
@@ -87,7 +100,4 @@ const CheckboxInput = styled.input`
       background-color: ${({ theme }) => theme.color.gray300};
     }
   }
-`;
-const CheckboxLabel = styled.label`
-  cursor: pointer;
 `;

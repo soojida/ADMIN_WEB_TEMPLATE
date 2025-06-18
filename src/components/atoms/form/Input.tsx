@@ -1,11 +1,21 @@
 // 공통
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { transparentize } from "polished";
 
 // 함수
+import { useImage } from "@/hooks/components/input/useImage";
 import { useInput } from "@/hooks/components/input/useInput";
+
+// 컴포넌트
 import Label, { LabelProps } from "../label/Label";
+import Button from "../button/Button";
+
+export type InputImages = {
+  name?: string;
+  preview?: string | null;
+  file: File;
+};
 
 export type InputProps = {
   // input type 설정 (HTML의 input type 속성에 있는 값들로 제한)
@@ -17,7 +27,8 @@ export type InputProps = {
     | "search"
     | "tel"
     | "url"
-    | "file";
+    | "file"
+    | "image";
   // placeholder
   placeholder?: string;
   // input 외부의 요소 설정 (ex. 버튼)
@@ -45,6 +56,10 @@ export type InputProps = {
   value?: string | number;
   // 라벨 속성 사용
   labelProps?: LabelProps;
+  // 이미지 아이디
+  id?: string;
+  // 이미지 다중 선택 여부
+  multiple?: boolean;
 };
 
 const Input = ({
@@ -63,52 +78,92 @@ const Input = ({
   style,
   value,
   labelProps,
-  ...rest
+  id,
+  multiple,
+  ...props
 }: InputProps) => {
+  // 타입이 파일인 경우 상태 관리
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const htmlForId = labelProps?.htmlFor ?? "file-input";
-  const [dynamicMin] = useState(min ?? 0);
   const [localFileName, setLocalFileName] = useState("");
+
+  // 타입이 이미지인 경우 상태 관리
+  const [images, setImages] = useState<InputImages[]>([]);
+
+  const { handleChangeFile, handleChangeImage, handleRemoveImage } = useImage({
+    handlers: {
+      onChange: (file: File) => {
+        setLocalFileName(file.name);
+      },
+    },
+    images,
+    setImages,
+  });
+
+  // 타입이 이미지, 파일 이외의 경우 상태 관리
+  const [dynamicMin] = useState(min ?? 0);
+
   const { dynamicValue, onHandleInputChange } = useInput({
     min,
     max,
     onChange,
   });
 
-  const isValidImageExtension = (fileName: any) => {
-    const allowedExtensions = ["jpg", "jpeg", "png"];
-    const extension = fileName.split(".").pop().toLowerCase();
-
-    return allowedExtensions.includes(extension);
-  };
-
-  const handleFileChange = (id: any, e: any) => {
-    e.stopPropagation();
-
-    if (e.target.files.length > 0) {
-      const selectedFile = e.target.files[0];
-      const fileName = selectedFile.name;
-
-      const isImageUpload = id?.toLowerCase().includes("image");
-
-      if (isImageUpload && !isValidImageExtension(fileName)) {
-        alert("이미지 파일만 업로드 가능합니다. (.jpg, .jpeg, .png)");
-        return;
-      }
-
-      if (onChange) {
-        onChange(selectedFile);
-      } else {
-        setLocalFileName(selectedFile.name);
-      }
-    }
-  };
-
   switch (type) {
+    // 타입이 image 인 경우 사용합니다. (ex. 썸네일 등 이미지 표출 시)
+    case "image":
+      return (
+        <InputImageForm>
+          <InputImageInner>
+            <HiddenFileInput
+              ref={fileInputRef}
+              type="file"
+              multiple={multiple}
+              onClick={(e: any) => (e.target.value = "")}
+              onChange={(e: any) => handleChangeImage(e)}
+              {...props}
+            />
+            {/* 첨부 파일 선택 버튼 */}
+            <ImageUpload>
+              <ImageUploadInner className={className}>
+                <Button
+                  variant="primary"
+                  size="small"
+                  // 숨겨진 input 클릭
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  파일 선택
+                </Button>
+              </ImageUploadInner>
+              <ImageName>.jpg, .jpeg, .png </ImageName>
+            </ImageUpload>
+
+            {/* 첨부 파일 미리보기 */}
+            {images.length > 0 && (
+              <ImagePreviewForm>
+                {images.map((file, index) => (
+                  <ImageItem key={index}>
+                    <ImageFile
+                      src={file.preview ?? undefined}
+                      alt={file.name}
+                    />
+                    <ImageName>{file.name}</ImageName>
+                    <RemoveButton onClick={() => handleRemoveImage(index)}>
+                      ❌
+                    </RemoveButton>
+                  </ImageItem>
+                ))}
+              </ImagePreviewForm>
+            )}
+          </InputImageInner>
+        </InputImageForm>
+      );
+    // 타입이 file 인 경우 사용합니다. (ex. 엑셀 등의 첨부파일 표출 시)
     case "file":
       return (
         <InputFileForm>
           <InputStyle
-            value={value == null || value === "" ? localFileName : value}
+            value={localFileName}
             className={className}
             placeholder={placeholder}
             readOnly
@@ -122,14 +177,15 @@ const Input = ({
           <input
             type="file"
             id={htmlForId}
-            accept="image/*"
+            // accept="image/*"
             disabled={disabled}
-            onChange={(e) => {
-              handleFileChange(htmlForId, e);
+            onChange={(e: any) => {
+              handleChangeFile({ id: htmlForId, e });
             }}
           />
         </InputFileForm>
       );
+    // 이 외의 타입에 사용합니다.
     default:
       return (
         <InputForm className={className} style={style}>
@@ -144,7 +200,7 @@ const Input = ({
             min={dynamicMin}
             max={max}
             className={errorMessage ? "error" : ""}
-            {...rest}
+            {...props}
           />
           {/* 내부 아이콘 */}
           {icon && <Icon>{icon}</Icon>}
@@ -154,15 +210,96 @@ const Input = ({
               ({dynamicValue.length}/{max})
             </MaxLength>
           )}
-
           {/* 외부 버튼 */}
           {children}
         </InputForm>
       );
   }
 };
+
 export default React.memo(Input);
 
+// 타입이 이미지인 경우
+const HiddenFileInput = styled.input`
+  display: none;
+`;
+const InputImageForm = styled.div``;
+const InputImageInner = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+const ImageUpload = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+const ImageUploadInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100px;
+  height: 100px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px dashed ${({ theme }) => theme.color.blueGray200};
+  background: ${({ theme }) => theme.color.blueGray50};
+
+  &.error {
+    border: 1px solid ${({ theme }) => theme.color.error};
+    box-shadow: 0 0 3px 0
+      ${({ theme }) => transparentize(0.5, theme.color.error)};
+  }
+
+  svg {
+    font-size: 18px;
+    fill: ${({ theme }) => theme.color.gray400};
+  }
+`;
+
+const ImageItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+`;
+
+const ImageFile = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.color.blueGray100};
+`;
+
+const ImageName = styled.p`
+  max-width: 90px;
+  font-size: 12px;
+  text-align: center;
+  word-break: break-word;
+`;
+
+export const ImagePreviewForm = styled.div`
+  display: flex;
+  gap: 12px;
+  overflow: auto;
+`;
+
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 2px;
+  right: 0;
+  width: 18px;
+  border-radius: 0 4px 0 4px;
+  background: none;
+  color: ${({ theme }) => theme.color.error};
+  font-size: 10px;
+  cursor: pointer;
+`;
+
+// 타입이 파일인 경우 스타일 코드 ~
 const InputFileForm = styled.div`
   display: flex;
   align-items: center;

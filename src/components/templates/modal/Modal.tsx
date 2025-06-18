@@ -141,6 +141,7 @@ export const ModalHeader = styled.div<{ title?: string }>`
   }
 `;
 const ModalTitle = styled.h2`
+  font-weight: 500;
   font-size: 16px;
 `;
 export const ModalContents = styled.div`

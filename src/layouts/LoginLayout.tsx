@@ -6,6 +6,7 @@ type LoginLayoutProps = {
   children?: React.ReactNode;
   footer?: React.ReactNode;
   logo?: string | undefined;
+  desc?: React.ReactNode;
 };
 
 const LoginLayout = ({
@@ -13,6 +14,7 @@ const LoginLayout = ({
   children,
   footer,
   logo,
+  desc,
 }: LoginLayoutProps) => {
   return (
     <LoginContainer className={className}>
@@ -21,6 +23,7 @@ const LoginLayout = ({
           <LoginHeader>
             <h1 className="logo">
               <img src={logo} alt="BI" />
+              {desc && <span>{desc}</span>}
             </h1>
           </LoginHeader>
           <LoginContents>{children}</LoginContents>
@@ -38,7 +41,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background: ${({ theme }) => theme.color.gray100};
+  background: ${({ theme }) => theme.color.background};
 
   &:before,
   &:after {
@@ -57,9 +60,9 @@ const LoginInner = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 440px;
+  /* width: 440px; */
   min-width: 420px;
-  min-height: 568px;
+  min-height: 500px;
   padding: 64px 52px 68px 52px;
   background: ${({ theme }) => theme.color.white};
   border-radius: 8px;
@@ -71,21 +74,23 @@ const LoginHeader = styled.div`
   align-items: center;
   gap: 48px;
   width: 100%;
-  margin-bottom: 32px;
 
   h1 {
     display: flex;
+    flex-direction: column;
+    align-items: center;
 
     img {
-      width: 230px;
+      width: 200px;
       object-fit: cover;
     }
 
     span {
+      margin-top: 18px;
+      color: ${({ theme }) => theme.color.gray500};
       line-height: 1;
       font-size: 14px;
-      margin-left: 6px;
-      font-weight: 500;
+      font-weight: 400;
     }
   }
 
@@ -98,7 +103,7 @@ const LoginHeader = styled.div`
 const LoginContents = styled.div`
   position: relative;
   width: 100%;
-  padding: 28px 0 64px;
+  padding: 48px 0 64px;
 `;
 const LoginFooter = styled.div`
   width: 100%;

@@ -1,9 +1,9 @@
 // 공통
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 // 컴포넌트
-import Radio, { RadioProps } from "./Radio";
+import Radio, { RadioProps } from "@/components/atoms/form/Radio";
 
 export type RadioOption = {
   // input 값 설정

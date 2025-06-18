@@ -92,7 +92,7 @@ const TabItem = styled.div<TabProps>`
   ${({ shape }) => getShapeStyle(shape)}
   ${({ tabStyle }) => getStyle(tabStyle)}
   color:  ${({ theme }) => theme.color.gray300};
-  background: ${({ theme }) => theme.color.gray100};
+  background: ${({ theme }) => theme.color.background};
 
   &:not(:first-child) {
     margin-left: 4px;

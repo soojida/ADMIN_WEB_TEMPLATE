@@ -1,12 +1,10 @@
-// lib
+// 공통
 import React from "react";
-
-// style
 import styled from "styled-components";
 
-// components
-import Input, { InputProps } from "./Input";
-import Label, { LabelProps } from "../label/Label";
+// 컴포넌트
+import Input, { InputProps } from "@/components/atoms/form/Input";
+import Label, { LabelProps } from "@/components/atoms/label/Label";
 
 type InputFieldProps = {
   label?: string;

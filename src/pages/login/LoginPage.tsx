@@ -1,12 +1,13 @@
 // 공통
 import { useState } from "react";
 import theme from "@/styles/theme";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 // 컴포넌트
 import Button from "@/components/atoms/button/Button";
-import InputField, {
-  InputFieldGroup,
-} from "@/components/atoms/form/InputField";
+
+import ErrorMessage from "@/components/atoms/message/ErrorMessage";
 
 // 레이아웃
 import LoginLayout from "@/layouts/LoginLayout";
@@ -16,9 +17,9 @@ import logoBI from "@/assets/logo.svg";
 
 // 아이콘
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import styled from "styled-components";
-import ErrorMessage from "@/components/atoms/message/ErrorMessage";
-import { useNavigate } from "react-router-dom";
+import InputField, {
+  InputFieldGroup,
+} from "@/components/templates/field/InputField";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export const LoginPage = () => {
   return (
     <LoginLayout
       logo={logoBI}
+      desc="응용기술개발팀 어드민 템플릿 가이드"
       footer={
         <Button
           className="w-full"
