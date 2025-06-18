@@ -29,7 +29,7 @@ const Sidemenu = () => {
 
   return (
     <>
-      <SidemenuLayout folded={isMenuFolded}>
+      <SidemenuLayout $folded={isMenuFolded}>
         <SideMenuList>
           {sidemenuConst.map((menu: any, idx: number) => {
             return <SidemenuItem key={idx} item={menu} />;
@@ -37,7 +37,7 @@ const Sidemenu = () => {
         </SideMenuList>
       </SidemenuLayout>
       <FoldingButton
-        folded={isMenuFolded}
+        $folded={isMenuFolded}
         onClick={() => setIsMenuFolded((state) => !state)}
         icon={
           isMenuFolded ? (
@@ -61,16 +61,16 @@ const Sidemenu = () => {
 
 export default React.memo(Sidemenu);
 
-const SidemenuLayout = styled.div<{ folded: boolean }>`
+const SidemenuLayout = styled.div<{ $folded: boolean }>`
   position: relative;
   width: 240px;
   height: 100%;
-  left: ${({ folded }) => (folded ? "0" : "-240px")};
-  flex: 0 0 ${({ folded }) => (folded ? "240px" : "0")};
+  left: ${({ $folded }) => ($folded ? "0" : "-240px")};
+  flex: 0 0 ${({ $folded }) => ($folded ? "240px" : "0")};
   overflow: auto;
   border-right: 1px solid ${({ theme }) => theme.color.gray200};
   background: ${({ theme }) => theme.color.white};
-  transform: translateX(${({ folded }) => (folded ? "0" : "-100%")});
+  transform: translateX(${({ $folded }) => ($folded ? "0" : "-100%")});
   transition:
     transform 0.3s ease,
     flex 0.3s ease;
@@ -80,10 +80,10 @@ const SideMenuList = styled.ul`
   padding: 16px 12px;
   height: 100%;
 `;
-const FoldingButton = styled(Button)<{ folded: boolean }>`
+const FoldingButton = styled(Button)<{ $folded: boolean }>`
   position: absolute;
   top: 50%;
-  left: ${({ folded }) => (folded ? "240px" : "0")};
+  left: ${({ $folded }) => ($folded ? "240px" : "0")};
   transform: translateY(-50%);
   z-index: 10;
   width: 24px;
