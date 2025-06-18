@@ -89,6 +89,7 @@ const TabItem = styled.div<TabProps>`
   flex: 1;
   font-size: 14px;
   cursor: pointer;
+  white-space: pre;
   ${({ shape }) => getShapeStyle(shape)}
   ${({ tabStyle }) => getStyle(tabStyle)}
   color:  ${({ theme }) => theme.color.gray300};
