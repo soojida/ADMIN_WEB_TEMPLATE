@@ -165,6 +165,16 @@ const SampleDetailPage = () => {
                   },
                 ],
               },
+              {
+                headers: [
+                  {
+                    value: "editor (편집기)",
+                    type: "editor",
+                    placeholder: "내용을 입력해주세요.",
+                    tdColspan: 3,
+                  },
+                ],
+              },
             ]}
           />
         }
