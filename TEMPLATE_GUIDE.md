@@ -5,6 +5,8 @@
 
 ## 1. GitHub 템플릿으로 로컬에 복제하기
 
+### 1-1) 기존 커밋 히스토리를 사용하지 않고 싶다면?
+
 1. 템플릿 저장소 접속
 2. "Use this template" 버튼 클릭 → "Create a new repository" 버튼 클릭
 3. 새 저장소명 입력 (ex. `[프로젝트명]-admin-web`)
@@ -14,6 +16,17 @@
 git clone https://github.com/[프로젝트명]-admin-web.git
 cd [프로젝트명]-admin-web
 npm install
+```
+
+### 1-2) 기존 커밋 히스토리까지 가져오고 싶다면?
+
+```
+# 템플릿 클론
+git clone https://github.com/you/template-repo.git new-project
+cd new-project
+
+# 푸시 (기존 커밋 포함)
+git push -u origin main
 ```
 
 ## 2. 프로젝트명 및 메타 정보 변경
