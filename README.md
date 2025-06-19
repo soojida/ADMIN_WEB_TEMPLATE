@@ -1,6 +1,6 @@
 # ADMIN WEB TEMPLATE
 
-> React + TypeScript + Vite 기반의 웹 어드민 템플릿
+> React + TypeScript + Vite + styled-components 기반의 웹 어드민 템플릿 입니다.
 
 ## 📌 브랜치 정보
 
@@ -8,13 +8,9 @@
 - dev : 개발 서버 배포 코드
   - `devs/[기능명]` : 기능 개발 브랜치 → `dev` → `main` 순으로 Merge 진행
 
-## 💿 개발 환경
+## 📄 템플릿 사용 가이드
 
-### 개발 서버 실행
-
-```
-npm run dev
-```
+→ [TEMPLATE_GUIDE.md](./TEMPLATE_GUIDE.md)를 참고하세요.
 
 ## 📦 릴리즈 및 커밋 컨벤션 가이드
 
